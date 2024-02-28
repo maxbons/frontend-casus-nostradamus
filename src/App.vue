@@ -1,47 +1,35 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+import TodoList from './components/TodoList.vue'
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+    <main class="gradient-bg">
+        <div class="logo">
+            <img
+                class="rounded"
+                src="./assets/nostradamus-logo.png"
+                alt="nostradamus logo"
+            />
+        </div>
+        <div class="container p-5">
+            <TodoList />
+        </div>
+    </main>
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
+main {
+    min-height: 100vh;
+    background: #0f2027; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #2c5364, #203a43, #0f2027);
+    background: linear-gradient(to right, #2c5364, #203a43, #0f2027);
 }
 
 .logo {
-  display: block;
-  margin: 0 auto 2rem;
+    text-align: center;
 }
 
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+.logo img {
+    margin-top: 2rem;
 }
 </style>
