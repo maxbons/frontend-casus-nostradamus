@@ -67,7 +67,7 @@ ul {
 
     p {
         text-decoration: line-through;
-        inline-size: 250px;
+        inline-size: 200px;
         overflow-wrap: break-word;
 
         @media (min-width: 1200px) {
