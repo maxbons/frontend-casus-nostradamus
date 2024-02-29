@@ -1,6 +1,6 @@
 // Imports
 import { defineStore } from "pinia";
-import { type Todo, createDummyTodo, Status } from '@/types'
+import { type Todo, Status } from '@/types'
 
 // Store
 export const useTodoStore = defineStore({
@@ -18,25 +18,28 @@ export const useTodoStore = defineStore({
         },
         checkTodo(todo: Todo) {
             if (!todo) return
-            const index = this.findIndexById(todo.id)
+            const index = this.findIndexById(Status.active, todo.id)
 
             if (index !== -1) {
                 this.activeTodos[index].status = Status.completed;
-                this.activeTodos.splice(index, 1)
                 this.completedTodos.push(todo)
+                this.activeTodos.splice(index, 1)
             }
         },
-        updateTodo(todo: Todo) {
-            if (!todo) return
+        unCheckTodo(todo: Todo) {
+            if(!todo) return
 
-            const index = this.findIndexById(todo.id)
-            
+            if (!todo) return
+            const index = this.findIndexById(Status.completed, todo.id)
+
             if (index !== -1) {
-              this.activeTodos[index] = createDummyTodo()
+                this.completedTodos[index].status = Status.active;
+                this.completedTodos.splice(index, 1)
+                this.activeTodos.push(todo)
             }
         },
         deleteTodo(todo: Todo) {
-            const index = this.findIndexById(todo.id)
+            const index = this.findIndexById(Status.active, todo.id)
       
             if (index === -1) return
       
@@ -45,8 +48,12 @@ export const useTodoStore = defineStore({
         clearCompleted() {
             this.completedTodos = [] as Todo[]
         },
-        findIndexById(id: string) {
-            return this.activeTodos.findIndex((todo) => todo.id === id)
+        findIndexById(status: Status, id: string) {
+            const statusArray = (status === Status.active)
+                ? this.activeTodos
+                : this.completedTodos
+
+            return statusArray.findIndex((todo) => todo.id === id)
         },
     }),
 })

@@ -1,22 +1,20 @@
 <template>
     <div class="todo-wrapper">
-        <div class="d-flex flex-column-reverse flex-md-row gap-3">
+        <div class="todo-content">
+            <strong>{{ todo.title }}</strong>
+            {{ todo.description }}
+            <i>
+                {{ todo.date.toLocaleDateString() }} -
+                {{ todo.date.toLocaleTimeString('nl-NL', { hour: '2-digit', minute: '2-digit' }) }}
+            </i>
+        </div>
+        <div>
             <button
-                class="btn btn-success h-25"
+                class="btn btn-success me-2"
                 @click.prevent="checkTodo(todo)"
             >
                 <i class="pi pi-check"></i>
             </button>
-            <div class="todo-info">
-                <strong>{{ todo.title }}</strong>
-                {{ todo.description }}
-                <i>{{ todo.date.toLocaleDateString() }}</i>
-            </div>
-        </div>
-        <div
-            v-if="todo.status !== Status.completed"
-            class="todo-buttons"
-        >
             <button
                 class="btn btn-primary me-2"
                 @click.prevent="updateTodo(todo)"
@@ -36,7 +34,7 @@
 
 <script lang="ts" setup>
 // Imports
-import { type Todo, Status } from '@/types'
+import { type Todo } from '@/types'
 import { useTodoStore } from '@/store/index'
 
 // Props
@@ -46,36 +44,48 @@ defineProps<{
 
 // Consts
 const todoStore = useTodoStore()
+const emit = defineEmits(['updateTodo'])
 
 // Functions
 function deleteTodo(todo: Todo) {
     todoStore.deleteTodo(todo)
 }
 function updateTodo(todo: Todo) {
-    todoStore.updateTodo(todo)
+    emit('updateTodo', todo)
 }
 function checkTodo(todo: Todo) {
     todoStore.checkTodo(todo)
 }
 </script>
 
-<style scoped>
+<style lang="scss">
 .todo-wrapper {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-}
+    @extend .d-flex;
+    @extend .flex-column;
+    @extend .flex-md-row;
+    @extend .justify-content-between;
+    @extend .align-items-start;
+    @extend .gap-3;
 
-i {
-    font-size: small;
-}
-.todo-info {
-    display: flex;
-    flex-direction: column;
-}
-.todo-buttons {
-    display: flex;
-    margin-right: 2rem;
-    margin-left: 1rem;
+    .todo-content {
+        @extend .d-flex;
+        @extend .flex-column;
+
+        inline-size: 250px;
+        overflow-wrap: break-word;
+
+        @media (min-width: 768px) {
+            inline-size: 300px;
+        }
+    }
+
+    i {
+        font-size: small;
+    }
+
+    button {
+        width: 40px;
+        height: 40px;
+    }
 }
 </style>
