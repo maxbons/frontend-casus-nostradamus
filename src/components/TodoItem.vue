@@ -62,7 +62,7 @@ function checkTodo(todo: Todo) {
 .todo-wrapper {
     @extend .d-flex;
     @extend .flex-column;
-    @extend .flex-md-row;
+    @extend .flex-lg-row;
     @extend .justify-content-between;
     @extend .align-items-start;
     @extend .gap-3;
@@ -74,7 +74,7 @@ function checkTodo(todo: Todo) {
         inline-size: 250px;
         overflow-wrap: break-word;
 
-        @media (min-width: 768px) {
+        @media (min-width: 992px) {
             inline-size: 300px;
         }
     }
