@@ -8,7 +8,7 @@
                 {{ todo.date.toLocaleTimeString('nl-NL', { hour: '2-digit', minute: '2-digit' }) }}
             </i>
         </div>
-        <div>
+        <div class="d-flex">
             <button
                 class="btn btn-success me-2"
                 @click.prevent="checkTodo(todo)"
