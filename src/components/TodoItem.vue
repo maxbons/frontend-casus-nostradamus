@@ -71,10 +71,10 @@ function checkTodo(todo: Todo) {
         @extend .d-flex;
         @extend .flex-column;
 
-        inline-size: 250px;
+        inline-size: 230px;
         overflow-wrap: break-word;
 
-        @media (min-width: 992px) {
+        @media (min-width: 1200px) {
             inline-size: 300px;
         }
     }

@@ -70,8 +70,8 @@ ul {
         inline-size: 250px;
         overflow-wrap: break-word;
 
-        @media (min-width: 992px) {
-            inline-size: 350px;
+        @media (min-width: 1200px) {
+            inline-size: 300px;
         }
     }
 
