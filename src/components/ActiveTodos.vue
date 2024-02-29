@@ -6,7 +6,7 @@
         <div class="card-body">
             <ul>
                 <li
-                    v-for="todo in activeTodos"
+                    v-for="todo in sortedTodos"
                     :key="todo.id"
                 >
                     <TodoItem
@@ -18,6 +18,7 @@
         </div>
         <div class="card-footer">
             <form @submit.prevent="addTodo()">
+                <h5>Add a task to your list</h5>
                 <div class="form-group mt-1">
                     <label for="title">Title</label>
                     <input
@@ -52,7 +53,7 @@
                     type="submit"
                 >
                     <i class="pi pi-plus"></i>
-                    Add task
+                    Add
                 </button>
             </form>
         </div>
@@ -61,7 +62,7 @@
 
 <script lang="ts" setup>
 // Imports
-import { reactive, ref, onMounted, toRaw } from 'vue'
+import { reactive, ref, onMounted, toRaw, computed } from 'vue'
 import { v4 as uuidv4 } from 'uuid'
 import { type Todo, initialState } from '@/types'
 import { useTodoStore } from '@/store/index'
@@ -70,6 +71,20 @@ import TodoItem from '@/components/TodoItem.vue'
 // Consts & Lets
 const todoStore = useTodoStore()
 const activeTodos = ref<Todo[]>([])
+const sortedTodos = computed(() =>
+    activeTodos.value.slice().sort((a, b) => {
+        let x = a.date,
+            y = b.date
+        if (x < y) {
+            return -1
+        }
+        if (x > y) {
+            return 1
+        }
+        return 0
+    })
+)
+
 let newTodo = reactive<Todo>({
     ...initialState,
     id: uuidv4(),
